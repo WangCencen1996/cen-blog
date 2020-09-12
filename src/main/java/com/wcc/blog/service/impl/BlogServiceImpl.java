@@ -217,7 +217,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Map<String, List<Blog>> archiveBlog() {
         List<String> years = blogMapper.listGroupByYear();
-        Map<String,List<Blog>> blogMap = new HashMap<>();
+        Map<String,List<Blog>> blogMap = new LinkedHashMap<>();
         for (String year : years) {
             List<Blog> blogs = blogMapper.listBlogByYear(year);
             for (Blog blog : blogs) {

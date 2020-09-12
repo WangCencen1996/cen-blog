@@ -9,7 +9,7 @@
 </head>
 <body>
     <!--导航-->
-    <nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">Blog</h2>
@@ -23,7 +23,7 @@
                 <div class="m-item m-mobile-hide menu">
                     <div class="ui item">
                         <div class="text">
-                            <a href="#" th:href="@{/admin/type/list}" class="item"><i class="idea icon"></i>分类管理</a>
+                            <a href="#" th:href="@{/admin/type/list}" class="item active"><i class="idea icon"></i>分类管理</a>
                         </div>
                     </div>
                 </div>

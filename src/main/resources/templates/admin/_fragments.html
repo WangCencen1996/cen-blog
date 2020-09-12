@@ -18,24 +18,24 @@
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">Blog</h2>
-            <div class="m-item m-mobile-hide menu"  th:classappend="${n==1}?'active'">
+            <div class="m-item m-mobile-hide menu">
                 <div class="ui item">
                     <div class="text">
-                        <a href="#" th:href="@{/admin/blog/list}" class="item"><i class="home icon"></i>博客管理</a>
+                        <a href="#" th:href="@{/admin/blog/list}" class="item" th:classappend="${n==1}?'active'"><i class="home icon"></i>博客管理</a>
                     </div>
                 </div>
             </div>
-            <div class="m-item m-mobile-hide menu"  th:classappend="${n==2}?'active'">
+            <div class="m-item m-mobile-hide menu">
                 <div class="ui item">
                     <div class="text">
-                        <a href="#" th:href="@{/admin/type/list}" class="item"><i class="idea icon"></i>分类管理</a>
+                        <a href="#" th:href="@{/admin/type/list}" class="item" th:classappend="${n==2}?'active'"><i class="idea icon"></i>分类管理</a>
                     </div>
                 </div>
             </div>
-            <div class="m-item m-mobile-hide menu"  th:classappend="${n==3}?'active'">
+            <div class="m-item m-mobile-hide menu">
                 <div class="ui item">
                     <div class="text">
-                        <a href="#" th:href="@{/admin/tag/list}" class="item"><i class="tags icon"></i>标签管理</a>
+                        <a href="#" th:href="@{/admin/tag/list}" class="item" th:classappend="${n==3}?'active'"><i class="tags icon"></i>标签管理</a>
                     </div>
                 </div>
             </div>
