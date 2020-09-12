@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>分类列表</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+    <!--导航-->
+    <nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui teal header item">Blog</h2>
+                <div class="m-item m-mobile-hide menu">
+                    <div class="ui item">
+                        <div class="text">
+                            <a href="#" th:href="@{/admin/blog/list}" class="item"><i class="home icon"></i>博客管理</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-item m-mobile-hide menu">
+                    <div class="ui item">
+                        <div class="text">
+                            <a href="#" th:href="@{/admin/type/list}" class="item"><i class="idea icon"></i>分类管理</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-item m-mobile-hide menu">
+                    <div class="ui item">
+                        <div class="text">
+                            <a href="#" th:href="@{/admin/tag/list}" class="item"><i class="tags icon"></i>标签管理</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="right m-item m-mobile-hide menu">
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="../../static/images/tx/tx.jpg" th:src="@{${session.user.avatar}}"  alt="" class="ui avatar image">
+                            <span th:text="${session.user.nickname}">默认的名字</span>
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" th:href="@{/admin/loginout}" class="item">注销</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" id="menu_toggle" class="ui black icon button m-right-top m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+
+    <!--中间内容-->
+    <div class="m-container-small m-padded-tb-big">
+        <div class="ui container">
+            <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                <i class="message close icon"></i>
+                <div class="header">提示</div>
+                <p th:text="${message}">恭喜，操作成功！</p>
+            </div>
+            <form action="#" th:action="@{/admin/type/search}" class="ui segment form" method="post">
+                <div class="inline fields">
+                    <div class="field">
+                        <input type="text" name="title" placeholder="分类名称...">
+                    </div>
+                    <div class="field">
+                        <button class="ui teal button">
+                            <i class="search icon"></i>搜索
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>名称</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="type,iterStat : ${page.list}">
+                        <td th:text="${iterStat.count}"></td>
+                        <td th:text="${type.name}"></td>
+                        <td>
+                            <a href="#" th:href="@{/admin/type/edit?id={id}(id=${type.id})}" class="ui mini teal basic button">编辑</a>
+                            <a href="#" id="del" th:onclick="'javascript:delType('+${type.id}+');'" class="ui mini red basic button">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="6">
+                            <div class="ui mini pagination menu" th:if="${page.pages}>1">
+                                <a th:unless="${page.isFirstPage}" href="#" th:href="@{/admin/type/list?page={page}(page=${page.pageNum}-1)}" class="item">上一页</a>
+                                <a th:unless="${page.isLastPage}" href="#" th:href="@{/admin/type/list?page={page}(page=${page.pageNum}+1)}" class="item">下一页</a>
+                            </div>
+                            <a href="#" th:href="@{/admin/type/edit}" class="ui mini right floated teal button">新增</a>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <br>
+    <!--底部footer-->
+    <footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+        <div class="ui center aligned container">
+            <div class="ui inverted divided stackable grid">
+                <div class="three wide column">
+                    <div class="ui inverted link list">
+                        <div class="item">
+                            <img src="../../static/images/WeChat.png" th:src="@{/images/WeChat.png}" class="ui rounded image" style="width: 110px" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">用户故事 (User Story)</a>
+                        <a href="#" class="item">用户故事 (User Story)</a>
+                        <a href="#" class="item">用户故事 (User Story)</a>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">邮箱: 761987568@QQ.com</a>
+                        <a href="#" class="item">QQ: 761987568</a>
+                    </div>
+                </div>
+                <div class="five wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">Blog介绍</h4>
+                    <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客，会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <p class="m-text-thin m-text-spaced m-opacity-tiny">In 2020,WCC Designed A Bolg In Shanghai</p>
+        </div>
+    </footer>
+
+    <!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script>
+        $('.ui.dropdown').dropdown({
+            on: 'hover'
+        })
+    </script>
+    <!--/*/</th:block>/*/-->
+    <script>
+        $('#menu_toggle').click(function () {
+            $('.m-item').toggleClass('m-mobile-hide');
+        });
+        function delType(id) {
+            var ret=confirm("确定要删除吗?",);
+            if (ret == true){
+                $.ajax({
+                    url: '/admin/type/delete?id='+id,
+                    success: function (res) {
+                        if (res == 'yes'){
+                            alert("删除成功！");
+                            location.reload();
+                        }else{
+                            alert("删除失败！");
+                        }
+                    }
+                });
+            }
+        };
+        //消息提示关闭初始化
+        $('.message.close').on('click',function () {
+            $(this).closest('.success.message').transition('fade');
+        })
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcc.blog.mapper.TypeMapper">
+    <select id="getType" resultType="Type">
+        select id,name,isDelete
+        from t_type where id=#{id} and isDelete=0
+    </select>
+    <select id="listTypeTop" resultType="Type">
+        SELECT id,NAME FROM t_type t LEFT JOIN
+        (SELECT type_id,COUNT(*) cou FROM t_blog WHERE isDelete=0 GROUP BY type_id) c
+        ON c.type_id=t.id WHERE t.isDelete=0 ORDER BY c.cou DESC,t.id
+        limit #{size}
+    </select>
+    <select id="getTypeByName" resultType="Type">
+        select id,name,isDelete
+        from t_type where name like binary(#{name}) and isDelete=0
+    </select>
+    <select id="listType" resultType="Type">
+        select id,name,isDelete
+        from t_type where isDelete=0
+    </select>
+    <insert id="saveType" parameterType="Type">
+        insert into t_type(name,isDelete) values(#{name},0)
+    </insert>
+    <update id="removeType">
+        update t_type set isDelete=1 where id=#{id}
+    </update>
+    <update id="updateType">
+        update t_type set name=#{name} where id=#{id} and isDelete=0
+    </update>
+</mapper>

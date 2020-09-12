@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcc.blog.mapper.BlogMapper">
+    <resultMap id="allBlog" type="Blog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="firstPicture" column="firstPicture"/>
+        <result property="flag" column="flag"/>
+        <result property="views" column="views"/>
+        <result property="apperciation" column="apperciation"/>
+        <result property="shareStatement" column="shareStatement"/>
+        <result property="commentabled" column="commentabled"/>
+        <result property="published" column="published"/>
+        <result property="recommened" column="recommened"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="description" column="description"/>
+        <result property="typeId" column="type_id"/>
+        <result property="userId" column="user_id"/>
+        <collection property="tags" ofType="com.wcc.blog.pojo.Tag">
+            <id property="id" column="tid"/>
+            <result property="name" column="name"/>
+        </collection>
+    </resultMap>
+    <select id="getBlog" resultMap="allBlog">
+        select * from t_blog
+        where id=#{id} and isDelete=0
+    </select>
+    <select id="listBlog" resultMap="allBlog">
+        select * from t_blog
+        <where>
+            isDelete=0
+            <if test="typeId != null">
+                and type_id = #{typeId}
+            </if>
+            <if test="title != null">
+                and title like concat('%',#{title},'%')
+            </if>
+        </where>
+        order by updateTime desc
+    </select>
+    <select id="listBlogByQuery" resultMap="allBlog">
+        select * from t_blog
+        <where>
+            isDelete=0
+            <if test="query != null">
+                and (title like concat('%',#{query},'%')
+                or content like concat('%',#{query},'%'))
+            </if>
+        </where>
+        order by updateTime desc
+    </select>
+    <select id="listGroupByYear" resultType="String">
+        SELECT DATE_FORMAT(b.createTime,'%Y') YEAR
+        FROM t_blog b GROUP BY YEAR ORDER BY YEAR DESC
+    </select>
+    <select id="listBlogByYear" resultMap="allBlog">
+        select * from t_blog b
+        where date_format(b.createTime,'%Y') = #{year} and isDelete=0
+    </select>
+    <select id="countBlog" resultType="Long" >
+        select count(*) from t_blog
+        where isDelete=0
+    </select>
+    <select id="listRecommendBlogTop" resultMap="allBlog">
+        SELECT * FROM t_blog
+        WHERE recommened = 1 AND isDelete=0
+        ORDER BY updateTime DESC limit #{size}
+    </select>
+
+    <select id="getBlogByTypeId" resultMap="allBlog">
+        SELECT * FROM t_blog
+        WHERE type_id = #{typeId} AND isDelete=0
+    </select>
+    <select id="getBlogByTagId" resultMap="allBlog">
+        SELECT b.* FROM t_blog b
+        LEFT JOIN t_tag_blog t ON b.id=t.blog_id
+        WHERE t.tag_id=#{tagId} and b.isDelete=0
+    </select>
+    <insert id="saveBlog" parameterType="Blog">
+        <selectKey keyProperty="id" resultType="Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_blog(title,content,firstPicture,flag,views,
+        apperciation,shareStatement,commentabled,published,recommened,
+        createTime,updateTime,type_id,user_id,description,isDelete)
+        values(#{title},#{content},#{firstPicture},#{flag},#{views},
+        #{apperciation},#{shareStatement},#{commentabled},#{published},#{recommened},
+        #{createTime},#{updateTime},#{typeId},#{userId},#{description},0)
+    </insert>
+    <insert id="saveBlogToTag">
+        insert into t_tag_blog(tag_id,blog_id,isDelete)
+        values(#{tagId},#{blogId},0)
+    </insert>
+    <update id="updateBlog" parameterType="Blog">
+        update t_blog
+        <set>
+            <if test="description != null">
+                description=#{description},
+            </if>
+            <if test="title != null">
+                title=#{title},
+            </if>
+            <if test="content != null">
+                content=#{content},
+            </if>
+            <if test="firstPicture != null">
+                firstPicture=#{firstPicture},
+            </if>
+            <if test="flag != null">
+                flag=#{flag},
+            </if>
+            <if test="views != null">
+                views=#{views},
+            </if>
+            <if test="apperciation != null">
+                apperciation=#{apperciation},
+            </if>
+            <if test="shareStatement != null">
+                shareStatement=#{shareStatement},
+            </if>
+            <if test="commentabled != null">
+                commentabled=#{commentabled},
+            </if>
+            <if test="published != null">
+                published=#{published},
+            </if>
+            <if test="recommened != null">
+                recommened=#{recommened},
+            </if>
+            <if test="updateTime != null">
+                updateTime=#{updateTime},
+            </if>
+            <if test="typeId!= null">
+                type_id=#{typeId},
+            </if>
+        </set>
+        where id=#{id} and isDelete=0
+    </update>
+    <delete id="deleteBlogToTag">
+        delete from t_tag_blog
+        where blog_id=#{id} or isDelete=1
+    </delete>
+    <update id="addViews">
+        update t_blog
+        set views = views+1
+        where id=#{id}
+    </update>
+    <update id="deleteBlog">
+        update t_blog
+        set isDelete = 1
+        where id=#{id}
+    </update>
+</mapper>
