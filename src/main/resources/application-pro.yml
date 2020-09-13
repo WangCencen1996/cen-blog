@@ -14,7 +14,7 @@ mybatis:
 logging:
   level:
     root: info
-    com.wcc.blog: debug
+    com.wcc.blog: info
   file:
     name: log/blog-pro.log
 
