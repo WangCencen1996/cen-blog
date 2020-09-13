@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class AboutShowController {
-    @Autowired
-    private BlogService blogService;
 
     @GetMapping("/about")
     public String archives(Model model){

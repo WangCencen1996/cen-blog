@@ -21,4 +21,14 @@
         insert into t_comment(nickname,email,content,avatar,createTime,parent,blog_id,addminComment,isDelete)
         values(#{nickname},#{email},#{content},#{avatar},#{createTime},#{parent},#{blogId},#{addminComment},0)
     </insert>
+    <update id="deleteComment">
+        update t_comment
+        set isDelete=1
+        where id=#{id}
+    </update>
+    <update id="deleteCommentByBlogId">
+        update t_comment
+        set isDelete=1
+        where blog_id=#{blogId}
+    </update>
 </mapper>

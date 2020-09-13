@@ -9,4 +9,7 @@ public interface CommentService {
 
     boolean saveComment(Comment comment);
 
+    boolean deleteComment(Long commentId);
+
+    boolean deleteCommentByBlogId(Long blogId);
 }

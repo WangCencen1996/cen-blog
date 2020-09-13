@@ -94,10 +94,10 @@
             <div class="ui bottom attached segment" th:if="${page.pages}>1">
                 <div class="ui middle aligned two column grid">
                     <div class="column">
-                        <a th:unless="${page.isFirstPage}" href="#" th:href="@{/?page={page}(page=${page.pageNum}-1)}" class="ui mini teal basic button">上一页</a>
+                        <a th:unless="${page.isFirstPage}" href="#" th:href="@{?page={page}(page=${page.pageNum}-1)}" class="ui mini teal basic button">上一页</a>
                     </div>
                     <div class="right aligned column">
-                        <a th:unless="${page.isLastPage}" href="#" th:href="@{/?page={page}(page=${page.pageNum}+1)}" class="ui mini teal basic button">下一页</a>
+                        <a th:unless="${page.isLastPage}" href="#" th:href="@{?page={page}(page=${page.pageNum}+1)}" class="ui mini teal basic button">下一页</a>
                     </div>
                 </div>
             </div>
@@ -111,23 +111,27 @@
                 <div class="three wide column">
                     <div class="ui inverted link list">
                         <div class="item">
-                            <img src="../static/images/WeChat.png" class="ui rounded image" style="width: 110px" alt="">
+                            <img src="../static/images/WeChat.png" th:src="@{/images/WeChat.png}"  class="ui rounded image" style="width: 110px" alt="">
                         </div>
                     </div>
                 </div>
                 <div class="four wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">用户故事 (User Story)</a>
-                        <a href="#" class="item">用户故事 (User Story)</a>
-                        <a href="#" class="item">用户故事 (User Story)</a>
+                    <div id="newblog-container">
+                        <div class="ui inverted link list" th:fragment="newBlogList">
+                            <a href="#" th:href="@{/blog?id={id}(id=${blog.id})}" class="item" th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事 (User Story)</a>
+                            <!--/*-->
+                            <a href="#" class="item">用户故事 (User Story)</a>
+                            <a href="#" class="item">用户故事 (User Story)</a>
+                            <!--*/-->
+                        </div>
                     </div>
                 </div>
                 <div class="four wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
                     <div class="ui inverted link list">
-                        <a href="#" class="item">邮箱: 761987568@QQ.com</a>
-                        <a href="#" class="item">QQ: 761987568</a>
+                        <a href="#" class="item" th:text="#{_fragments.email}">邮箱: 761987568@QQ.com</a>
+                        <a href="#" class="item" th:text="#{_fragments.qq}">QQ: 761987568</a>
                     </div>
                 </div>
                 <div class="five wide column">

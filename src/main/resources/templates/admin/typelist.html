@@ -95,8 +95,8 @@
                     <tr>
                         <th colspan="6">
                             <div class="ui mini pagination menu" th:if="${page.pages}>1">
-                                <a th:unless="${page.isFirstPage}" href="#" th:href="@{/admin/type/list?page={page}(page=${page.pageNum}-1)}" class="item">上一页</a>
-                                <a th:unless="${page.isLastPage}" href="#" th:href="@{/admin/type/list?page={page}(page=${page.pageNum}+1)}" class="item">下一页</a>
+                                <a th:unless="${page.isFirstPage}" href="#" th:href="@{?page={page}(page=${page.pageNum}-1)}" class="item">上一页</a>
+                                <a th:unless="${page.isLastPage}" href="#" th:href="@{?page={page}(page=${page.pageNum}+1)}" class="item">下一页</a>
                             </div>
                             <a href="#" th:href="@{/admin/type/edit}" class="ui mini right floated teal button">新增</a>
                         </th>
@@ -161,12 +161,8 @@
                 $.ajax({
                     url: '/admin/type/delete?id='+id,
                     success: function (res) {
-                        if (res == 'yes'){
-                            alert("删除成功！");
-                            location.reload();
-                        }else{
-                            alert("删除失败！");
-                        }
+                        alert("删除成功！");
+                        location.reload();
                     }
                 });
             }

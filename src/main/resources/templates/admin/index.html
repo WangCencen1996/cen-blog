@@ -9,7 +9,7 @@
 </head>
 <body>
     <!--导航-->
-    <nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <nav th:replace="admin/_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">Blog</h2>
@@ -59,7 +59,7 @@
                 <div class="header">Hi</div>
                 <p><span th:text="${session.user.nickname}">coco</span>管理员，欢迎登录！</p>
             </div>
-            <img src="https://picsum.photos/800/450" th:src="@{https://picsum.photos/800/450}" alt="" class="ui rounded bordered fluid image">
+            <img src="../../static/images/welcome.jpg" th:src="@{/images/welcome.jpg}" alt="" class="ui rounded bordered fluid image">
         </div>
     </div>
     <br>

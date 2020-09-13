@@ -35,6 +35,22 @@ public class CommentServiceImpl implements CommentService {
         return true;
     }
 
+    @Override
+    public boolean deleteComment(Long commentId) {
+        List<Comment> comments = commentMapper.listCommentByParent(commentId);
+        for (Comment comment : comments) {
+            commentMapper.deleteComment(comment.getId());
+        }
+        commentMapper.deleteComment(commentId);
+        return true;
+    }
+
+    @Override
+    public boolean deleteCommentByBlogId(Long blogId) {
+        commentMapper.deleteCommentByBlogId(blogId);
+        return true;
+    }
+
     //循环每个顶级的评论节点
     private List<Comment> eachComment(List<Comment> comments){
         List<Comment> commentsView = new ArrayList<>();

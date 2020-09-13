@@ -153,6 +153,57 @@
                     <button type="button" id="publish-btn" class="ui teal button">发布</button>
                 </div>
             </form>
+            <br>
+            <hr>
+            <div class="ui bottom attached segment" th:if="${comments}">
+                <!--留言区域-->
+                <div id="comment-container" class="ui teal segment">
+                    <div th:fragment="commentlist">
+                        <div class="ui threaded comments" style="max-width: 100%">
+                            <h3 class="ui dividing header">留言</h3>
+                            <div class="comment" th:each="comment : ${comments}">
+                                <a class="avatar">
+                                    <img src="../static/images/tx/tx2.jpg" th:src="@{${comment.avatar}}">
+                                </a>
+                                <div class="content">
+                                    <a class="author">
+                                        <span th:text="${comment.nickname}">Matt</span>
+                                        <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${comment.addminComment}">博主</div>
+                                    </a>
+                                    <div class="metadata">
+                                        <span class="date" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}">今天下午 5:42</span>
+                                    </div>
+                                    <div class="text" th:text="${comment.content}">太赞了！ </div>
+                                    <div class="actions">
+                                        <a href="#" th:href="@{/admin/blog/commentDelete?id={id}&commentId={commentId}(id=${blog.id},commentId=${comment.id})}" >删除</a>
+                                    </div>
+                                </div>
+                                <div class="comments" th:if="${#arrays.length(comment.childComments)}>0">
+                                    <div class="comment" th:each="children : ${comment.childComments}">
+                                        <a class="avatar">
+                                            <img src="../static/images/tx/tx2.jpg" th:src="@{${children.avatar}}">
+                                        </a>
+                                        <div class="content">
+                                            <a class="author">
+                                                <span th:text="${children.nickname}">小红</span>
+                                                <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${children.addminComment}">博主</div>
+                                                <!--<span th:text="${children.parentComment.nickname}" class="m-teal">@小白</span>-->
+                                            </a>
+                                            <div class="metadata">
+                                                <span class="date" th:text="${#dates.format(children.createTime,'yyyy-MM-dd HH:mm')}">今天下午 5:42</span>
+                                            </div>
+                                            <div class="text" th:text="${children.content}">太赞了！ </div>
+                                            <div class="actions">
+                                                <a href="#" th:href="@{/admin/blog/commentDelete?id={id}&commentId={commentId}(id=${blog.id},commentId=${comment.id})}" >删除</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <br>

@@ -36,7 +36,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog getBlog(Long id) {
         Blog blog = blogMapper.getBlog(id);
-        /*if (blog.getTypeId()!=null){
+        if (blog.getTypeId()!=null){
             Type type = typeMapper.getType(blog.getTypeId());
             blog.setType(type);
         }
@@ -45,7 +45,7 @@ public class BlogServiceImpl implements BlogService {
             blog.setUser(user);
         }
         List<Tag> tags = tagMapper.listTagByBlogId(blog.getId());
-        blog.setTags(tags);*/
+        blog.setTags(tags);
         return blog;
     }
     @Override

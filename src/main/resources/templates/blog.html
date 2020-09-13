@@ -447,25 +447,28 @@ h5,h6{font-size:1em;}
                     <div class="ui basic teal left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法论</div>
                 </div>
                 <!--赞赏-->
-                <div class="ui center aligned basic segment">
-                    <button id="payButton" class="ui orange basic circular button">打赏</button>
-                </div>
-                <div class="ui payQR flowing popup transition hidden">
-                    <div class="ui orange basic label">
-                        <div class="ui images" style="font-size: inherit !important;">
-                            <div class="image">
-                                <img src="../static/images/zfb.png"  th:src="@{/images/zfb.png}" alt="" class="ui rounded bordered image" style="width: 150px">
-                                <div>支付宝打赏</div>
-                            </div>
-                            <div class="image">
-                                <img src="../static/images/weixinzf.png"  th:src="@{/images/weixinzf.png}" alt="" class="ui rounded bordered image" style="width: 150px">
-                                <div>微信打赏</div>
+                <div th:if="${blog.apperciation}">
+                    <div class="ui center aligned basic segment">
+                        <button id="payButton" class="ui orange basic circular button">打赏</button>
+                    </div>
+                    <div class="ui payQR flowing popup transition hidden">
+                        <div class="ui orange basic label">
+                            <div class="ui images" style="font-size: inherit !important;">
+                                <div class="image">
+                                    <img src="../static/images/zfb.png"  th:src="@{/images/zfb.png}" alt="" class="ui rounded bordered image" style="width: 150px">
+                                    <div>支付宝打赏</div>
+                                </div>
+                                <div class="image">
+                                    <img src="../static/images/weixinzf.png"  th:src="@{/images/weixinzf.png}" alt="" class="ui rounded bordered image" style="width: 150px">
+                                    <div>微信打赏</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="ui attached positive message">
+            <div class="ui attached positive message" th:if="${blog.shareStatement}">
                 <!--博客信息说明区域-->
                 <div class="ui middle aligned grid">
                     <div class="eleven wide column">
@@ -481,7 +484,7 @@ h5,h6{font-size:1em;}
                     </div>
                 </div>
             </div>
-            <div class="ui bottom attached segment">
+            <div class="ui bottom attached segment" th:if="${blog.commentabled}">
                 <!--留言区域-->
                 <div id="comment-container" class="ui teal segment">
                     <div th:fragment="commentList">
@@ -519,62 +522,13 @@ h5,h6{font-size:1em;}
                                                 <span class="date" th:text="${#dates.format(children.createTime,'yyyy-MM-dd HH:mm')}">今天下午 5:42</span>
                                             </div>
                                             <div class="text" th:text="${children.content}">太赞了！ </div>
-                                            <div class="actions">
+                                            <!--<div class="actions">
                                                 <a class="parent" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${children.id},data-commentnickname=${children.nickname}" onclick="parent(this)">回复</a>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="comment">
-                                <a class="avatar">
-                                    <img src="../static/images/tx/tx1.jpg" th:src="@{/images/tx1.jpg}">
-                                </a>
-                                <div class="content">
-                                    <a class="author">Elliot Fu</a>
-                                    <div class="metadata">
-                                        <span class="date">昨天上午12:30</span>
-                                    </div>
-                                    <div class="text">
-                                        <p>這對我的研究是非常有用.謝謝!</p>
-                                    </div>
-                                    <div class="actions">
-                                        <a class="parent">回复</a>
-                                    </div>
-                                </div>
-                                <div class="comments">
-                                    <div class="comment">
-                                        <a class="avatar">
-                                            <img src="../static/images/tx/tx2.jpg" th:src="@{/images/tx2.jpg}">
-                                        </a>
-                                        <div class="content">
-                                            <a class="author">Jenny Hess</a>
-                                            <div class="metadata">
-                                                <span class="date">刚刚</span>
-                                            </div>
-                                            <div class="text">艾略特你永远是多么正确 :) </div>
-                                            <div class="actions">
-                                                <a class="parent">回复</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment">
-                                <a class="avatar">
-                                    <img src="../static/images/tx/tx1.jpg" th:src="@{/images/tx1.jpg}">
-                                </a>
-                                <div class="content">
-                                    <a class="author">Joe Henderson</a>
-                                    <div class="metadata">
-                                        <span class="date">5 天以前</span>
-                                    </div>
-                                    <div class="text">老兄，这太棒了。非常感谢。 </div>
-                                    <div class="actions">
-                                        <a class="parent">回复</a>
-                                    </div>
-                                </div>
-                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -630,23 +584,27 @@ h5,h6{font-size:1em;}
                 <div class="three wide column">
                     <div class="ui inverted link list">
                         <div class="item">
-                            <img src="../static/images/WeChat.png" th:src="@{/images/WeChat.png}" class="ui rounded image" style="width: 110px" alt="">
+                            <img src="../static/images/WeChat.png" th:src="@{/images/WeChat.png}"  class="ui rounded image" style="width: 110px" alt="">
                         </div>
                     </div>
                 </div>
                 <div class="four wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">用户故事 (User Story)</a>
-                        <a href="#" class="item">用户故事 (User Story)</a>
-                        <a href="#" class="item">用户故事 (User Story)</a>
+                    <div id="newblog-container">
+                        <div class="ui inverted link list" th:fragment="newBlogList">
+                            <a href="#" th:href="@{/blog?id={id}(id=${blog.id})}" class="item" th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事 (User Story)</a>
+                            <!--/*-->
+                            <a href="#" class="item">用户故事 (User Story)</a>
+                            <a href="#" class="item">用户故事 (User Story)</a>
+                            <!--*/-->
+                        </div>
                     </div>
                 </div>
                 <div class="four wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
                     <div class="ui inverted link list">
-                        <a href="#" class="item">邮箱: 761987568@QQ.com</a>
-                        <a href="#" class="item">QQ: 761987568</a>
+                        <a href="#" class="item" th:text="#{_fragments.email}">邮箱: 761987568@QQ.com</a>
+                        <a href="#" class="item" th:text="#{_fragments.qq}">QQ: 761987568</a>
                     </div>
                 </div>
                 <div class="five wide column">
@@ -698,7 +656,7 @@ h5,h6{font-size:1em;}
             on: 'hover',
             position: 'left center'
         });
-        var serurl = "http://127.0.0.1:9090";
+        var serurl = /*[[#{blog.serurl}]]*/"127.0.0.1:9090";
         var url = /*[[@{blog?id={id}(id=${blog.id})}]]*/"";
         var qrcode = new QRCode("qrcode", {
             text: serurl+url,

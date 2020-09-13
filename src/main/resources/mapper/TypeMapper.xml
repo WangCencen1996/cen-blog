@@ -8,7 +8,7 @@
     </select>
     <select id="listTypeTop" resultType="Type">
         SELECT id,NAME FROM t_type t LEFT JOIN
-        (SELECT type_id,COUNT(*) cou FROM t_blog WHERE isDelete=0 GROUP BY type_id) c
+        (SELECT type_id,COUNT(*) cou FROM t_blog b WHERE b.isDelete=0 GROUP BY type_id) c
         ON c.type_id=t.id WHERE t.isDelete=0 ORDER BY c.cou DESC,t.id
         limit #{size}
     </select>

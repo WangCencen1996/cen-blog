@@ -121,8 +121,8 @@
                     <tr>
                         <th colspan="7">
                             <div class="ui mini pagination menu" th:if="${page.pages}>1">
-                                <a th:unless="${page.isFirstPage}" href="#" th:href="@{/admin/blog/list?page={page}(page=${page.hasPreviousPage}?${page.prePage}:1)}" class="item">上一页</a>
-                                <a th:unless="${page.isLastPage}" href="#" th:href="@{/admin/blog/list?page={page}(page=${page.hasNextPage}?${page.nextPage}:${page.pages})}" class="item">下一页</a>
+                                <a th:unless="${page.isFirstPage}" href="#" th:href="@{?page={page}(page=${page.hasPreviousPage}?${page.prePage}:1)}" class="item">上一页</a>
+                                <a th:unless="${page.isLastPage}" href="#" th:href="@{?page={page}(page=${page.hasNextPage}?${page.nextPage}:${page.pages})}" class="item">下一页</a>
                             </div>
                             <a href="#" th:href="@{/admin/blog/add}" class="ui mini right floated teal button">新增</a>
                         </th>

@@ -194,17 +194,21 @@
                 </div>
                 <div class="four wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">用户故事 (User Story)</a>
-                        <a href="#" class="item">用户故事 (User Story)</a>
-                        <a href="#" class="item">用户故事 (User Story)</a>
+                    <div id="newblog-container">
+                        <div class="ui inverted link list" th:fragment="newBlogList">
+                            <a href="#" th:href="@{/blog?id={id}(id=${blog.id})}" class="item" th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事 (User Story)</a>
+                            <!--/*-->
+                            <a href="#" class="item">用户故事 (User Story)</a>
+                            <a href="#" class="item">用户故事 (User Story)</a>
+                            <!--*/-->
+                        </div>
                     </div>
                 </div>
                 <div class="four wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
                     <div class="ui inverted link list">
-                        <a href="#" class="item">邮箱: 761987568@QQ.com</a>
-                        <a href="#" class="item">QQ: 761987568</a>
+                        <a href="#" class="item" th:text="#{_fragments.email}">邮箱: 761987568@QQ.com</a>
+                        <a href="#" class="item" th:text="#{_fragments.qq}">QQ: 761987568</a>
                     </div>
                 </div>
                 <div class="five wide column">
