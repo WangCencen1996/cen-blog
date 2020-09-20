@@ -29,9 +29,15 @@ public class IndexController {
     @GetMapping("/")
     public String index(@RequestParam(name = "page",required = false,defaultValue = "1") int page, Blog blog, Model model, HttpServletRequest request){
         // 获取请求的ip地址
-        /*String ip = getIpAddress(request);
-        System.out.println(ip);
-        visitService.saveIP(ip);*/
+        boolean flag = true;
+        if (flag){
+            String ip = getIpAddress(request);
+            System.out.println(ip);
+            visitService.saveIP(ip);
+            flag = false;
+        }else {
+            flag = true;
+        }
         model.addAttribute("page",blogService.listBlog(page));
         model.addAttribute("types",typeService.listTypeTop(6));
         model.addAttribute("tags",tagService.listTagTop(10));
